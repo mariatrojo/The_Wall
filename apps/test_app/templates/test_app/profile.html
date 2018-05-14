@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Dashboard</title>
+	{% load static %}
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" href="{% static 'test_app/style.css' %}" media="screen" title="no title" charset="utf-8">
+</head>
+<body>
+
+	<nav class="navbar navbar-default navbar-expand-lg">
+		<a class="navbar-brand" href="#">Test App</a>
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item">
+				{% if request.session.user_id == 1 %}
+					<a class="nav-link" href="../../dashboard/admin">Dashboard</a>
+				{% else %}
+					<a class="nav-link" href="../../dashboard">Dashboard</a>
+				{% endif %}
+			</li>
+			<li class="nav-item">
+					<a class="nav-link" href="../show/{{request.session.user_id}}">Profile</a>
+			</li>
+		</ul>
+			<span class="navbar-text">
+				<a class="nav-item nav-link" href="/logoff">Log off</a>
+			</span>
+		</div>
+	</nav>
+
+		<div class="container-fluid welcome">
+			<div class="row">
+				<div class="col">
+					<h3>{{ user.first_name }}</h3>
+					<p>Registered at: {{ user.created_at }}</p>
+					<p>User ID: {{ user.id }}</p>
+					<p>Email address: {{ user.email }}</p>
+					<p>Description: {{ user.desc }}</p>
+			
+					<h4>Leave a message for {{ user.first_name }}</h4>
+					<form action="../post_message/{{ user.id }}" method="POST">
+						{% csrf_token %}
+						<input type="hidden" name="logged_in_user" value="{{ request.session.user_id }}">
+						<input type="hidden" name="id" value="{{ user.id }}">
+						<textarea name="message"></textarea>
+						<p><button type="submit" class="btn btn-info">Post</button></p>
+					</form>
+				</div>
+				<div class="col">
+					{% if user.id == request.session.user_id %}
+						<a href="../edit/{{user.id}}"><button class="btn btn-info">Edit</button></a>
+					{% endif %}
+
+					{% if messages %}
+						{% for message in messages %}
+							<p>{{ message }}</p>
+						{% endfor %}
+					{% endif %}
+				</div>
+			</div>
+		</div>
+
+
+			{% for message in user.messages.all %}
+			<div class="container-fluid profile-message">
+				{% if message.user_id == user.id %}
+
+				{% for author in authors %}
+					{% if author.id == message.author_id %}
+						<p>{{author.first_name}} wrote:</p>
+					
+				
+					<h4>{{message.text}}</h4>
+					<p>{{message.created_at}}</p>
+
+			</div>
+
+			<div class="container-fluid comment">
+
+				<h6>Leave a comment for {{ author.first_name }}</h6>
+				<form action="../post_comment/{{ message.author_id }}" method="POST">
+					{% csrf_token %}
+					<input type="hidden" name="logged_in_user" value="{{ request.session.user_id }}">
+					<input type="hidden" name="id" value="{{ message.author_id }}">
+					<textarea name="message"></textarea>
+					<p><button type="submit" class="btn btn-info">Post</button></p>
+				</form>
+			</div>
+
+					{% endif %}
+				{% endfor %}
+				{% endif %}
+
+			
+			{% endfor %}
+			
+
+
+
+
+		
+
+
+</body>
+</html>

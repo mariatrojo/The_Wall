@@ -1,0 +1,98 @@
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+body {
+	background-color: rgb(208, 226, 228);
+	color: rgb(55, 126, 131);
+}
+
+td, th {
+	padding: 10px;
+}
+
+table {
+	margin-top: 15px;
+}
+table, tr, td, th {
+	border: 1px solid black;
+}
+
+.navbar {
+	background-color: white;
+	padding-left: 10%;
+	padding-right: 10%;
+}
+
+.container-fluid {
+	width: 80%;
+}
+
+.welcome {
+	background-color: rgb(169, 195, 197);
+	padding: 20px;
+	margin: 20px auto;
+}
+
+.message {
+	color: rgb(230, 153, 101);
+	text-align: left;
+}
+
+:any-link {
+	color: rgb(169, 195, 197);
+}
+
+:any-link:hover {
+	color: black;
+}
+
+.light-link {
+	color: white;
+}
+
+/* SIGN IN PAGE */
+
+.sign-in {
+	background-color: rgb(169, 195, 197);
+	padding: 20px;
+	margin: 20px 10%;
+}
+.dark-link {
+	color: rgb(55, 126, 131);
+}
+
+/* EDIT PAGE */
+
+.edit1 {
+	background-color: rgb(169, 195, 197);
+	margin-left: 10%;
+	margin-right: 5%;
+	padding: 20px;
+
+}
+
+.edit2 {
+	background-color: rgb(169, 195, 197);
+	margin-right: 10%;
+	padding: 20px;
+}
+
+.title {
+	margin-top: 20px;
+}
+
+.comment {
+	background-color: rgb(169, 195, 197);
+	padding: 20px;
+	margin-bottom: 50px;
+	text-align: right;
+	width: 80%;
+}
+
+.profile-message {
+	background-color: white;
+	padding: 20px;
+	margin: 20px auto;
+}

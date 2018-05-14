@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Dashboard</title>
+	{% load static %}
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" href="{% static 'test_app/style.css' %}" media="screen" title="no title" charset="utf-8">
+</head>
+<body>
+
+	<nav class="navbar navbar-default navbar-expand-lg">
+		<a class="navbar-brand" href="#">Test App</a>
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item">
+				{% if request.session.user_id == 1 %}
+					<a class="nav-link" href="../../dashboard/admin">Dashboard</a>
+				{% else %}
+					<a href="../../dashboard">Dashboard</a>
+				{% endif %}
+			</li>
+			<li class="nav-item">
+					<a class="nav-item nav-link" href="../../users/show/{{ request.session.user_id }}">Profile</a>
+			</li>
+		</ul>
+			<span class="navbar-text">
+				<a class="nav-item nav-link" href="/logoff">Log off</a>
+			</span>
+		</div>
+	</nav>
+		<div class="container-fluid title">
+			<h3>Edit Profile {{ user.id }}</h3>
+		</div>
+		
+
+		<div class="row">
+			<div class="container-fluid edit1 col">
+				<form action="../edit_info/{{ user.id }}" method="POST">
+					{% csrf_token %}
+					<input type="hidden" name="id" value="{{ user.id }}">
+					<h4>Edit Information</h4>
+					<p>Email Address:</p>
+					<p><input type="text" name="email" placeholder="{{ user.email }}"></p>
+					<p>First Name:</p>
+					<p><input type="text" name="first_name" placeholder="{{ user.first_name }}"></p>
+					<p>Last Name:</p>
+					<p><input type="text" name="last_name" placeholder="{{ user.last_name }}"></p>
+					<p>User Level:</p>
+					<p><select name="user_level"></p>
+						<option value="1" name="normal">Normal</option>
+						<option value="2" name="admin">Admin</option>
+					</select>
+					<p><button type="submit" class="btn btn-info">Save</button></p>
+				</form>
+			</div>
+			<div class="container-fluid edit2 col">
+				<form action="../edit_pw/{{ user.id }}" method="POST">
+					{% csrf_token %}
+					<input type="hidden" name="id" value="{{ user.id }}">
+					<h4>Change Password</h4>
+					<p>Password:</p>
+					<p><input type="password" name="password"></p>
+					<p>Password Confirmation:</p>
+					<p><input type="password" name="confirm_password"></p>
+					<button type="submit" class="btn btn-info">Update Password</button>
+				</form>
+			</div>
+		</div>
+
+		{% if messages %}
+			{% for message in messages %}
+				<p>{{ message }}</p>
+			{% endfor %}
+		{% endif %}
+
+		
+		{% if user.id == request.session.user_id %}
+			<div class="container-fluid welcome">
+				<h4>Edit Description</h4>
+					<form action="" method="POST">
+						{% csrf_token %}
+						<input type="hidden" name="id" value="{{ request.session.user_id }}">
+						<textarea name="message"></textarea>
+						<p><button type="submit" class="btn btn-info">Save</button></p>
+					</form>
+			</div>
+		{% endif %}
+
+</body>
+</html>

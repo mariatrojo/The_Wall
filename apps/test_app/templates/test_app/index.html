@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Home Page</title>
+	{% load static %}
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" href="{% static 'test_app/style.css' %}" media="screen" title="no title" charset="utf-8">
+</head>
+<body>
+
+	<nav class="navbar navbar-default">
+		<a class="navbar-brand" href="#">Test App</a>
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item">
+				<a class="nav-link" href="">Home</a>
+			</li>
+		</ul>
+		<span class="navbar-text">
+			<a class="nav-link" href="/signin">Sign in</a>
+		</span>
+	</nav>
+
+	<div class="container-fluid welcome">
+		<h1>Welcome to the Test</h1>
+		<p>
+			We're going to build a cool application using an MVC framework!
+			This application was built with the Village88 folks!
+		</p>
+		<button type="button" class="btn btn-info"><a class="light-link" href="/signin">Start</a></button>
+	</div>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col">
+				<h4>Manage Users</h4>
+				<p>
+					Using this application, you'll learn how to add remove, and edit
+					users for the application.
+				</p>
+			</div>
+			<div class="col">
+				<h4>Leave messages</h4>
+				<p>
+					Users will be able to leave a message to another user using this application.
+				</p>
+			</div>
+			<div class="col">
+				<h4>Edit User Information</h4>
+				<p>
+					Admins will be able to edit another user's information
+					(email address, first name, last name, etc.)
+				</p>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

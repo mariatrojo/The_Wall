@@ -12,10 +12,12 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
 	<link rel="stylesheet" href="{% static 'test_app/style.css' %}" media="screen" title="no title" charset="utf-8">
+
+	<link href="https://fonts.googleapis.com/css?family=Fugaz+One" rel="stylesheet">	
 </head>
 <body>
 	<nav class="navbar navbar-default">
-		<a class="navbar-brand" href="../">Test App</a>
+		<a class="navbar-brand logo" href="../">The Wall</a>
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item">
 				<a class="nav-link" href="../">Home</a>
@@ -40,14 +42,14 @@
 					<p><input type="text" name="email"></p>
 					<p>Password:</p>
 					<p><input type="password" name="password"></p>
-					<button type="submit" class="btn btn-info">Sign in</button>
-					<a class="dark-link" href="/register"><p>Don't have an account? Register</a></p>
+					<button type="submit" class="btn btn-outline-light">Sign in</button>
+					<a class="light-link" href="/register"><p>Don't have an account? Register</a></p>
 				</form>
 			</div>
 			<div class="col-6">
 				{% if messages %}
 					{% for message in messages %}
-						<p class="sign-in-message">{{ message }}</p>
+						<p class="message sign-in-message add-margin-top">{{ message }}</p>
 					{% endfor %}
 				{% endif %}
 			</div>

@@ -142,7 +142,7 @@ class BlogManager(models.Manager):
 		# normal = postData['normal']
 		# admin = postData['admin']
 
-		if not email and not fname and not lname:
+		if not email and not fname and not lname and not userLevel:
 			errors.append("All fields cannot be empty")
 		else:
 			if len(email) < 5 and len(email) > 1:
@@ -208,6 +208,24 @@ class BlogManager(models.Manager):
 				user.save()
 			return user
 
+		return errors
+
+	def edit_desc_validator(self, postData):
+		errors = []
+		desc = postData['desc']
+		user_id = postData['id']
+
+		if not desc:
+			errors.append("Description cannot be empty")
+		elif len(desc) < 8:
+			errors.append("Description must be 8 characters or longer")
+
+		if not errors:
+			if desc:
+				user = User.objects.get(id = user_id)
+				user.desc = desc
+				user.save()
+			return user
 
 		return errors
 
@@ -219,7 +237,7 @@ class BlogManager(models.Manager):
 
 		if not msg:
 			errors.append("Message cannot be empty")
-		elif len(msg) < 8:
+		elif len(msg) < 2:
 			errors.append("Message must be 8 characters or longer")
 
 		if not errors:
@@ -227,6 +245,26 @@ class BlogManager(models.Manager):
 				user = User.objects.get(id = user_id)
 				author = User.objects.get(id = author)
 				return Message.objects.create(text=msg, user=user, author=author)
+
+		return errors
+
+	def comment_validator(self, postData):
+		errors = []
+		comment = postData['message']
+		# user_id = postData['id']
+		commenter = postData['logged_in_user']
+		message_post = postData['id']
+
+		if not comment:
+			errors.append("Comment cannot be empty")
+		elif len(comment) < 2:
+			errors.append("Commment must be 8 characters or longer")
+
+		if not errors:
+			if comment:
+				message = Message.objects.get(id = message_post)
+				commenter = User.objects.get(id = commenter)
+				return Comment.objects.create(text=comment, message=message, commenter=commenter)
 
 		return errors
 

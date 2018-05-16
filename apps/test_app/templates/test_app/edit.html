@@ -12,17 +12,18 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
 	<link rel="stylesheet" href="{% static 'test_app/style.css' %}" media="screen" title="no title" charset="utf-8">
+	<link href="https://fonts.googleapis.com/css?family=Fugaz+One" rel="stylesheet">
 </head>
 <body>
 
 	<nav class="navbar navbar-default navbar-expand-lg">
-		<a class="navbar-brand" href="#">Test App</a>
+		<a class="navbar-brand logo" href="#">The Wall</a>
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item">
 				{% if request.session.user_id == 1 %}
 					<a class="nav-link" href="../../dashboard/admin">Dashboard</a>
 				{% else %}
-					<a href="../../dashboard">Dashboard</a>
+					<a class="nav-link" href="../../dashboard">Dashboard</a>
 				{% endif %}
 			</li>
 			<li class="nav-item">
@@ -34,7 +35,7 @@
 			</span>
 		</div>
 	</nav>
-		<div class="container-fluid title">
+		<div class="container-fluid title add-margin-top">
 			<h3>Edit Profile {{ user.id }}</h3>
 		</div>
 		
@@ -44,31 +45,38 @@
 				<form action="../edit_info/{{ user.id }}" method="POST">
 					{% csrf_token %}
 					<input type="hidden" name="id" value="{{ user.id }}">
-					<h4>Edit Information</h4>
+					<h4 class="title">Edit Information</h4>
 					<p>Email Address:</p>
-					<p><input type="text" name="email" placeholder="{{ user.email }}"></p>
+					<p><input type="text" name="email" value="{{ user.email }}"></p>
 					<p>First Name:</p>
-					<p><input type="text" name="first_name" placeholder="{{ user.first_name }}"></p>
+					<p><input type="text" name="first_name" value="{{ user.first_name }}"></p>
 					<p>Last Name:</p>
-					<p><input type="text" name="last_name" placeholder="{{ user.last_name }}"></p>
+					<p><input type="text" name="last_name" value="{{ user.last_name }}"></p>
+					{% if request.session.user_id == 1 %}
 					<p>User Level:</p>
 					<p><select name="user_level"></p>
+						{% if user.user_level == 1 %}
 						<option value="1" name="normal">Normal</option>
 						<option value="2" name="admin">Admin</option>
+						{% else %}
+						<option value="2" name="admin">Admin</option>
+						<option value="1" name="normal">Normal</option>
+						{% endif %}
 					</select>
-					<p><button type="submit" class="btn btn-info">Save</button></p>
+					{% endif %}
+					<p><button type="submit" class="btn btn-outline-light">Save</button></p>
 				</form>
 			</div>
 			<div class="container-fluid edit2 col">
 				<form action="../edit_pw/{{ user.id }}" method="POST">
 					{% csrf_token %}
 					<input type="hidden" name="id" value="{{ user.id }}">
-					<h4>Change Password</h4>
+					<h4 class="title">Change Password</h4>
 					<p>Password:</p>
 					<p><input type="password" name="password"></p>
 					<p>Password Confirmation:</p>
 					<p><input type="password" name="confirm_password"></p>
-					<button type="submit" class="btn btn-info">Update Password</button>
+					<button type="submit" class="btn btn-outline-light">Update Password</button>
 				</form>
 			</div>
 		</div>
@@ -82,12 +90,12 @@
 		
 		{% if user.id == request.session.user_id %}
 			<div class="container-fluid welcome">
-				<h4>Edit Description</h4>
-					<form action="" method="POST">
+				<h4 class="title">Edit Description</h4>
+					<form action="../edit_desc/{{ user.id }}" method="POST">
 						{% csrf_token %}
 						<input type="hidden" name="id" value="{{ request.session.user_id }}">
-						<textarea name="message"></textarea>
-						<p><button type="submit" class="btn btn-info">Save</button></p>
+						<textarea class="post_message" name="desc">{{ user.desc }}</textarea>
+						<p><button type="submit" class="btn btn-outline-light">Save</button></p>
 					</form>
 			</div>
 		{% endif %}

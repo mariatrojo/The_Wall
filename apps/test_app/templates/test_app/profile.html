@@ -12,11 +12,26 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
 	<link rel="stylesheet" href="{% static 'test_app/style.css' %}" media="screen" title="no title" charset="utf-8">
+
+	<link href="https://fonts.googleapis.com/css?family=Fugaz+One" rel="stylesheet">
+	<script type="text/javascript">
+
+		$(window).scroll(function() {
+			sessionStorage.scrollTop = $(this).scrollTop();
+			});
+
+			$(document).ready(function() {
+			if (sessionStorage.scrollTop != "undefined") {
+				$(window).scrollTop(sessionStorage.scrollTop);
+			}
+		});
+	</script>
+
 </head>
 <body>
 
 	<nav class="navbar navbar-default navbar-expand-lg">
-		<a class="navbar-brand" href="#">Test App</a>
+		<a class="navbar-brand logo" href="#">The Wall</a>
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item">
 				{% if request.session.user_id == 1 %}
@@ -36,63 +51,92 @@
 	</nav>
 
 		<div class="container-fluid welcome">
-			<div class="row">
-				<div class="col">
-					<h3>{{ user.first_name }}</h3>
-					<p>Registered at: {{ user.created_at }}</p>
-					<p>User ID: {{ user.id }}</p>
-					<p>Email address: {{ user.email }}</p>
-					<p>Description: {{ user.desc }}</p>
+
+			<h3 class><span class="title">{{ user.first_name }} </span>
+				{% if user.id == request.session.user_id %}
+					<a href="../edit/{{user.id}}"><button class="btn btn-outline-light add-margin-left">Edit</button></a>
+				{% endif %}
+			</h3>
+
 			
-					<h4>Leave a message for {{ user.first_name }}</h4>
-					<form action="../post_message/{{ user.id }}" method="POST">
+			<p class="user-details">Registered at: {{ user.created_at }}</p>
+			<p class="user-details">User ID: #{{ user.id }}</p>
+			<p class="user-details">Email address: {{ user.email }}</p>
+			<p class="user-details">Description: {{ user.desc }}</p>
+	
+			<h5 class="add-margin-top">Leave a message for {{ user.first_name }}</h5>
+			<form action="../post_message/{{ user.id }}" method="POST">
+				{% csrf_token %}
+				<input type="hidden" name="logged_in_user" value="{{ request.session.user_id }}">
+				<input type="hidden" name="id" value="{{ user.id }}">
+				<textarea class="post_message" name="message"></textarea>
+				<p><button type="submit" class="btn btn-outline-light">Post</button></p>
+			</form>
+
+			{% if messages %}
+				{% for message in messages %}
+					<p>{{ message }}</p>
+				{% endfor %}
+			{% endif %}
+
+		</div>
+
+
+			{% for message in user_messages %}
+				{% if message.user_id == user.id %}
+					{% for author in authors %}
+						{% if author.id == message.author_id %}
+							<div class="container-fluid">
+								<p class="message-author">{{author.first_name}} wrote:</p>
+								<div class="profile-message">
+									<h4>{{message.text}}</h4>
+								</div>
+								<p>{{message.created_at}}</p>
+							</div>
+
+			{% for comment in comments %}
+				{% if comment.message_id == message.id %}
+				<div class="row">
+					<div class="col"></div>
+					<div class="col comment-right">
+						{% for author in authors %}
+							{% if author.id == comment.commenter_id %}
+								<h6 class="message-author">{{author.first_name}} wrote:</h6>
+							{% endif %}
+						{% endfor %}
+						<div class="comment-container">
+							<h5>{{comment.text}}</h5>
+						</div>
+						<p>{{comment.created_at}}</p>
+					
+					</div>
+				</div>
+				{% endif %}
+			{% endfor %}
+
+
+			<div class="row">
+				<div class="col"></div>
+				<div class="col container-fluid comment">
+					<h6>Leave a comment for {{ author.first_name }}</h6>
+					<form action="../post_comment/{{ user.id }}" method="POST">
 						{% csrf_token %}
 						<input type="hidden" name="logged_in_user" value="{{ request.session.user_id }}">
-						<input type="hidden" name="id" value="{{ user.id }}">
-						<textarea name="message"></textarea>
-						<p><button type="submit" class="btn btn-info">Post</button></p>
+						<input type="hidden" name="id" value="{{ message.id }}">
+						<textarea class="post_comment" name="message"></textarea>
+						<p><button type="submit" class="btn btn-outline-light">Post</button></p>
 					</form>
-				</div>
-				<div class="col">
-					{% if user.id == request.session.user_id %}
-						<a href="../edit/{{user.id}}"><button class="btn btn-info">Edit</button></a>
-					{% endif %}
 
 					{% if messages %}
 						{% for message in messages %}
 							<p>{{ message }}</p>
 						{% endfor %}
 					{% endif %}
+
 				</div>
 			</div>
-		</div>
 
 
-			{% for message in user.messages.all %}
-			<div class="container-fluid profile-message">
-				{% if message.user_id == user.id %}
-
-				{% for author in authors %}
-					{% if author.id == message.author_id %}
-						<p>{{author.first_name}} wrote:</p>
-					
-				
-					<h4>{{message.text}}</h4>
-					<p>{{message.created_at}}</p>
-
-			</div>
-
-			<div class="container-fluid comment">
-
-				<h6>Leave a comment for {{ author.first_name }}</h6>
-				<form action="../post_comment/{{ message.author_id }}" method="POST">
-					{% csrf_token %}
-					<input type="hidden" name="logged_in_user" value="{{ request.session.user_id }}">
-					<input type="hidden" name="id" value="{{ message.author_id }}">
-					<textarea name="message"></textarea>
-					<p><button type="submit" class="btn btn-info">Post</button></p>
-				</form>
-			</div>
 
 					{% endif %}
 				{% endfor %}
@@ -101,9 +145,6 @@
 			
 			{% endfor %}
 			
-
-
-
 
 		
 

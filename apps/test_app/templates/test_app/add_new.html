@@ -12,11 +12,12 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
 	<link rel="stylesheet" href="{% static 'test_app/style.css' %}" media="screen" title="no title" charset="utf-8">
+	<link href="https://fonts.googleapis.com/css?family=Fugaz+One" rel="stylesheet">
 </head>
 <body>
 
 	<nav class="navbar navbar-default navbar-expand-lg">
-		<a class="navbar-brand" href="#">Test App</a>
+		<a class="navbar-brand" href="#">The Wall</a>
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item">
 				<a class="nav-link" href="../dashboard/admin">Dashboard</a>
@@ -33,30 +34,30 @@
 
 	<div class="row">
 		<div class="container-fluid sign-in col">
-			<h3>Add a new user</h3>
-				<form action="admin_register" method="POST">
-					{% csrf_token %}
-					<p>Email Address:</p>
-					<p><input type="text" name="email" class="form"></p>
-					<p>First Name:</p>
-					<p><input type="text" name="first_name" class="form"></p>
-					<p>Last Name:</p>
-					<p><input type="text" name="last_name" class="form"></p>
-					<p>Password:</p>
-					<p><input type="password" name="password" class="form"></p>
-					<p>Password Confirmation:</p>
-					<p><input type="password" name="confirm_password" class="form"></p>
-					<p><button type="submit" class="btn btn-info">Create</button></p>
-				</form>
-			<a href="../dashboard/admin"><p><button type="submit" class="btn btn-info">Return to Dashboard</button></p></a>
+			<h3 class="title">Add a new user</h3>
+			<form action="admin_register" method="POST">
+				{% csrf_token %}
+				<p>Email Address:</p>
+				<p><input type="text" name="email" class="form"></p>
+				<p>First Name:</p>
+				<p><input type="text" name="first_name" class="form"></p>
+				<p>Last Name:</p>
+				<p><input type="text" name="last_name" class="form"></p>
+				<p>Password:</p>
+				<p><input type="password" name="password" class="form"></p>
+				<p>Password Confirmation:</p>
+				<p><input type="password" name="confirm_password" class="form"></p>
+				<p><button type="submit" class="btn btn-outline-light">Create</button></p>
+			</form>
 		</div>
-		<div class="col-6">
-		<p>
-			{% if messages %}
-				{% for message in messages %}
-					<p>{{ message }}</p>
-				{% endfor %}
-			{% endif %}
+		<div class="col-6 add-margin-top">
+			<a href="../dashboard/admin"><p><button type="submit" class="btn btn-outline-light">Return to Dashboard</button></p></a>
+			<p>
+				{% if messages %}
+					{% for message in messages %}
+						<p class="message">{{ message }}</p>
+					{% endfor %}
+				{% endif %}
 			<p>
 		</div>
 	</div>

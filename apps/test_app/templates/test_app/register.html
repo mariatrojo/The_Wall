@@ -6,34 +6,60 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Register</title>
 	{% load static %}
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
 	<link rel="stylesheet" href="{% static 'test_app/style.css' %}" media="screen" title="no title" charset="utf-8">
+
+	<link href="https://fonts.googleapis.com/css?family=Fugaz+One" rel="stylesheet">
 </head>
 <body>
-	<h2>Test App</h2>
-	<h3><a href="../">Home</a></h3>
-	<h3><a href="../signin">Sign in</a></h3>
 
-	<h2>Register</h2>
-		<form action="register_form" method="POST">
-			{% csrf_token %}
-			<p>Email Address:</p>
-			<p><input type="text" name="email"></p>
-			<p>First Name:</p>
-			<p><input type="text" name="first_name"></p>
-			<p>Last Name:</p>
-			<p><input type="text" name="last_name"></p>
-			<p>Password:</p>
-			<p><input type="password" name="password"></p>
-			<p>Password Confirmation:</p>
-			<p><input type="password" name="confirm_password"></p>
-			<input type="submit" value="Register">
-			<a href="/signin"><p>Already have an account? Login</a></p>
-		</form>
-		{% if messages %}
-			{% for message in messages %}
-				<p>{{ message }}</p>
-			{% endfor %}
-		{% endif %}
+	<nav class="navbar navbar-default">
+		<a class="navbar-brand logo" href="../">The Wall</a>
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item">
+				<a class="nav-link" href="../">Home</a>
+			</li>
+		</ul>
+		<span class="navbar-text">
+			<a class="nav-link" href="../signin">Sign in</a>
+		</span>
+	</nav>
+
+
+	<div class="row">
+		<div class="container-fluid sign-in col">
+			<h2 class="title">Register</h2>
+			<form action="register_form" method="POST">
+				{% csrf_token %}
+				<p>Email Address:</p>
+				<p><input type="text" name="email"></p>
+				<p>First Name:</p>
+				<p><input type="text" name="first_name"></p>
+				<p>Last Name:</p>
+				<p><input type="text" name="last_name"></p>
+				<p>Password:</p>
+				<p><input type="password" name="password"></p>
+				<p>Password Confirmation:</p>
+				<p><input type="password" name="confirm_password"></p>
+				<button type="submit" class="btn btn-outline-light">Register</button>
+				<a class="light-link" href="/signin"><p>Already have an account? Login</a></p>
+			</form>
+		</div>
+		<div class="col-6">
+			{% if messages %}
+				{% for message in messages %}
+					<p class="message add-margin-top">{{ message }}</p>
+				{% endfor %}
+			{% endif %}
+		</div>
+	</div>
+
+
+
 	
 </body>
 </html>

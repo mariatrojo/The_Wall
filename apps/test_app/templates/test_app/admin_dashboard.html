@@ -12,11 +12,19 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
 	<link rel="stylesheet" href="{% static 'test_app/style.css' %}" media="screen" title="no title" charset="utf-8">
+	
+	<link href="https://fonts.googleapis.com/css?family=Fugaz+One" rel="stylesheet">
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$( "tr:odd" ).css( "background-color", "rgb(185, 176, 149)" );
+		});
+
+	</script>
 </head>
 <body>
 
 	<nav class="navbar navbar-default navbar-expand-lg">
-		<a class="navbar-brand" href="#">Test App</a>
+		<a class="navbar-brand logo" href="#">The Wall</a>
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item">
 				<a class="nav-link" href="">Dashboard</a>
@@ -32,8 +40,8 @@
 	</nav>
 
 	<div class="container-fluid welcome">
-		<h3>Manage Users</h3>
-		<a href="../users/new"><button class="btn btn-info">Add new</button></a>
+		<h3 class="title">Manage Users</h3>
+		<a href="../users/new"><button class="btn btn-outline-light">Add new</button></a>
 		<table>
 			<thead>
 				<tr>
@@ -60,10 +68,11 @@
 						{% endif %}
 					</td>
 					<td>
-						<a class="light-link" href="../users/edit/{{ user.id }}">edit</a> | <a class="light-link" href="../users/{{ user.id }}/destroy">remove</a>
+						<a class="light-link" href="../users/edit/{{ user.id }}">edit</a> | <a class="light-link" href="../users/{{ user.id }}/destroy" onclick="return confirm('Are you sure?')">remove</a>
 					</td>
 				</tr>
 			</tbody>
+			
 		{% endfor %}
 		</table>
 	</div>

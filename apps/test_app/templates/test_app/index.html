@@ -12,11 +12,13 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
 	<link rel="stylesheet" href="{% static 'test_app/style.css' %}" media="screen" title="no title" charset="utf-8">
+
+	<link href="https://fonts.googleapis.com/css?family=Fugaz+One" rel="stylesheet">
 </head>
 <body>
 
 	<nav class="navbar navbar-default">
-		<a class="navbar-brand" href="#">Test App</a>
+		<a class="navbar-brand logo" href="#">The Wall</a>
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item">
 				<a class="nav-link" href="">Home</a>
@@ -27,38 +29,55 @@
 		</span>
 	</nav>
 
-	<div class="container-fluid welcome">
-		<h1>Welcome to the Test</h1>
+	<div class="container-fluid welcome1">
+		<h1>Welcome to <span class="title">The Wall</span></h1>
 		<p>
-			We're going to build a cool application using an MVC framework!
-			This application was built with the Village88 folks!
+			A full CRUD application using an MVC framework. 
 		</p>
-		<button type="button" class="btn btn-info"><a class="light-link" href="/signin">Start</a></button>
+		<p>
+			<ul> 
+				This application was built with the following:
+				<li>Python</li>
+				<li>Django</li>
+				<li>MySQL</li>
+				<li>Bootstrap 4</li>
+				<li>JQuery</li>
+				<li>Jinja</li>
+			</ul>
+		</p>
+		<button type="button" class="btn btn-outline-light"><a class="light-link" href="/signin">Start</a></button>
 	</div>
 
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col">
-				<h4>Manage Users</h4>
+
+		<div class="row container-fluid">
+			<div class="col profile-message index-margin">
+				<h4 class="title">Login and Registration</h4>
 				<p>
-					Using this application, you'll learn how to add remove, and edit
-					users for the application.
+					A user can register for the application
+					and sign in, with their email, first name,
+					last name, a password, and password
+					confirmation. All forms have validations. 
 				</p>
 			</div>
-			<div class="col">
-				<h4>Leave messages</h4>
+			<div class="col profile-message index-margin">
+				<h4 class="title">Manage Users</h4>
+				<p>
+					Admins will be able to add and remove users.
+					They can also edit another user's information
+					(email address, first name, last name, user level).
+					Users can edit their own information as well as
+					their own User description.
+				</p>
+			</div>
+			<div class="col profile-message index-margin">
+				<h4 class="title">Leave messages and comments</h4>
 				<p>
 					Users will be able to leave a message to another user using this application.
+					Messages will be shown in descending order.
+					Users can also leave a comment for a message.
 				</p>
 			</div>
-			<div class="col">
-				<h4>Edit User Information</h4>
-				<p>
-					Admins will be able to edit another user's information
-					(email address, first name, last name, etc.)
-				</p>
-			</div>
-		</div>
+
 	</div>
 
 </body>

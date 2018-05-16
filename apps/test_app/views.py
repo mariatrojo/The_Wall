@@ -68,7 +68,16 @@ def register_form(request):
 
 def profile(request, user_id):
 	user = User.objects.get(id=user_id)
-	context = { "user": user, "authors": User.objects.all() }
+	authors = User.objects.all()
+	user_messages = Message.objects.order_by('-created_at')
+	comments = Comment.objects.all()
+	print comments
+	context = { 
+		"user": user, 
+		"authors": authors, 
+		"user_messages": user_messages, 
+		"comments": comments,
+	 }
 	return render(request, "test_app/profile.html", context)
 
 def admin_register(request):
@@ -98,16 +107,40 @@ def edit_pw(request, user_id):
 	else:
 		return redirect('/dashboard/admin')
 
+def edit_desc(request, user_id):
+	result = User.objects.edit_desc_validator(request.POST)
+	if type(result) == list:
+		for error in result:
+			messages.error(request, error)
+		return redirect('edit', user_id=user_id)
+	else:
+		return redirect('show', user_id=user_id)
+
 def destroy(request, user_id):
-	User.objects.get(id=user_id).delete()
+	try:
+		Message.objects.get(author_id=user_id).delete()
+		Comment.objects.get(commenter_id=user_id).delete()
+		User.objects.get(id=user_id).delete()
+	except:
+		User.objects.get(id=user_id).delete()
+
 	return redirect('/dashboard/admin')
 
 def post_message(request, user_id):
-	print "Hello!"
 	result = Message.objects.message_validator(request.POST)
 	if type(result) == list:
 		for error in result:
 			messages.error(request, error)
+		return redirect('show', user_id=user_id)
+		# return redirect('show', user_id=user_id)
+	else:
+		return redirect('show', user_id=user_id)
+
+def post_comment(request, user_id):
+	result = Comment.objects.comment_validator(request.POST)
+	if type(result) == list:
+		for error in result:
+			comment_messages = messages.error(request, error)
 		return redirect('show', user_id=user_id)
 		# return redirect('show', user_id=user_id)
 	else:

@@ -50,7 +50,7 @@
 		</div>
 	</nav>
 
-		<div class="container-fluid welcome">
+		<div class="container-fluid welcome large-div">
 
 			<h3 class><span class="title">{{ user.first_name }} </span>
 				{% if user.id == request.session.user_id %}
@@ -75,7 +75,7 @@
 
 			{% if messages %}
 				{% for message in messages %}
-					<p>{{ message }}</p>
+					<p class="message">{{ message }}</p>
 				{% endfor %}
 			{% endif %}
 
@@ -86,7 +86,7 @@
 				{% if message.user_id == user.id %}
 					{% for author in authors %}
 						{% if author.id == message.author_id %}
-							<div class="container-fluid">
+							<div class="container-fluid large-div">
 								<p class="message-author">{{author.first_name}} wrote:</p>
 								<div class="profile-message">
 									<h4>{{message.text}}</h4>
@@ -101,13 +101,13 @@
 					<div class="col comment-right">
 						{% for author in authors %}
 							{% if author.id == comment.commenter_id %}
-								<h6 class="message-author">{{author.first_name}} wrote:</h6>
+								<h6 class="message-author right-text">{{author.first_name}} wrote:</h6>
 							{% endif %}
 						{% endfor %}
 						<div class="comment-container">
 							<h5>{{comment.text}}</h5>
 						</div>
-						<p>{{comment.created_at}}</p>
+						<p class="right-text">{{comment.created_at}}</p>
 					
 					</div>
 				</div>
@@ -117,19 +117,19 @@
 
 			<div class="row">
 				<div class="col"></div>
-				<div class="col container-fluid comment">
-					<h6>Leave a comment for {{ author.first_name }}</h6>
+				<div class="col">
+					<h6 class="right-text">Leave a comment for {{ author.first_name }}</h6>
 					<form action="../post_comment/{{ user.id }}" method="POST">
 						{% csrf_token %}
 						<input type="hidden" name="logged_in_user" value="{{ request.session.user_id }}">
 						<input type="hidden" name="id" value="{{ message.id }}">
 						<textarea class="post_comment" name="message"></textarea>
-						<p><button type="submit" class="btn btn-outline-light">Post</button></p>
+						<p class="right-text"><button type="submit" class="btn btn-outline-light">Comment</button></p>
 					</form>
 
 					{% if messages %}
 						{% for message in messages %}
-							<p>{{ message }}</p>
+							<p class="message">{{ message }}</p>
 						{% endfor %}
 					{% endif %}
 

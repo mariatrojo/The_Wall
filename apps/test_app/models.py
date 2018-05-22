@@ -138,12 +138,15 @@ class BlogManager(models.Manager):
 		lname = postData['last_name']
 		user_id = postData['id']
 		userLevel = postData['user_level']
+		user = User.objects.get(id = user_id)
 		print userLevel
 		# normal = postData['normal']
 		# admin = postData['admin']
 
 		if not email and not fname and not lname and not userLevel:
 			errors.append("All fields cannot be empty")
+		elif user.email == email and user.first_name == fname and user.last_name == lname and (user.user_level == 9 and userLevel == "2") or (user.user_level == 1 and userLevel == "1"):
+			errors.append("No changes detected")
 		else:
 			if len(email) < 5 and len(email) > 1:
 				errors.append("Email cannot be less than 5 characters")
@@ -162,23 +165,18 @@ class BlogManager(models.Manager):
 
 		if not errors:
 			if email:
-				user = User.objects.get(id = user_id)
 				user.email = email
 				user.save()
 			if fname:
-				user = User.objects.get(id = user_id)
 				user.first_name = fname
 				user.save()
 			if lname:
-				user = User.objects.get(id = user_id)
 				user.last_name = lname
 				user.save()
 			if userLevel == "1":
-				user = User.objects.get(id = user_id)
 				user.user_level = 1
 				user.save()
 			if userLevel == "2":
-				user = User.objects.get(id = user_id)
 				user.user_level = 9
 				user.save()
 			print user.user_level
@@ -214,15 +212,17 @@ class BlogManager(models.Manager):
 		errors = []
 		desc = postData['desc']
 		user_id = postData['id']
+		user = User.objects.get(id = user_id)
 
 		if not desc:
 			errors.append("Description cannot be empty")
 		elif len(desc) < 8:
 			errors.append("Description must be 8 characters or longer")
+		elif desc == user.desc:
+			errors.append("No change detected")
 
 		if not errors:
 			if desc:
-				user = User.objects.get(id = user_id)
 				user.desc = desc
 				user.save()
 			return user
@@ -234,6 +234,7 @@ class BlogManager(models.Manager):
 		msg = postData['message']
 		user_id = postData['id']
 		author = postData['logged_in_user']
+		user = User.objects.get(id = user_id)
 
 		if not msg:
 			errors.append("Message cannot be empty")
@@ -242,7 +243,6 @@ class BlogManager(models.Manager):
 
 		if not errors:
 			if msg:
-				user = User.objects.get(id = user_id)
 				author = User.objects.get(id = author)
 				return Message.objects.create(text=msg, user=user, author=author)
 

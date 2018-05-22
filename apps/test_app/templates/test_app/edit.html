@@ -35,7 +35,7 @@
 			</span>
 		</div>
 	</nav>
-		<div class="container-fluid title add-margin-top">
+		<div class="container-fluid title add-margin-top large-div">
 			<h3>Edit Profile {{ user.id }}</h3>
 		</div>
 		
@@ -64,7 +64,16 @@
 						{% endif %}
 					</select>
 					{% endif %}
-					<p><button type="submit" class="btn btn-outline-light">Save</button></p>
+
+							<p>
+								<button type="submit" class="btn btn-outline-light">Save</button>
+
+								{% if messages %}
+									{% for message in messages %}
+										<span class="message">{{ message }}</span>
+									{% endfor %}
+								{% endif %}
+							</p>
 				</form>
 			</div>
 			<div class="container-fluid edit2 col">
@@ -76,26 +85,45 @@
 					<p><input type="password" name="password"></p>
 					<p>Password Confirmation:</p>
 					<p><input type="password" name="confirm_password"></p>
-					<button type="submit" class="btn btn-outline-light">Update Password</button>
+
+							<button type="submit" class="btn btn-outline-light">Update Password</button>
+
+							{% if messages %}
+								{% for message in messages %}
+									<span class="message">{{ message }}</span>
+								{% endfor %}
+							{% endif %}
+
+					
 				</form>
 			</div>
 		</div>
 
-		{% if messages %}
+		<!-- {% if messages %}
 			{% for message in messages %}
-				<p>{{ message }}</p>
+				<p class="message">{{ message }}</p>
 			{% endfor %}
-		{% endif %}
+		{% endif %} -->
 
 		
 		{% if user.id == request.session.user_id %}
-			<div class="container-fluid welcome">
+			<div class="container-fluid welcome large-div">
 				<h4 class="title">Edit Description</h4>
 					<form action="../edit_desc/{{ user.id }}" method="POST">
 						{% csrf_token %}
 						<input type="hidden" name="id" value="{{ request.session.user_id }}">
-						<textarea class="post_message" name="desc">{{ user.desc }}</textarea>
-						<p><button type="submit" class="btn btn-outline-light">Save</button></p>
+						<p><textarea class="post_message" name="desc">{{ user.desc }}</textarea></p>
+
+						<p>
+							<button type="submit" class="btn btn-outline-light">Save</button>
+
+							{% if messages %}
+								{% for message in messages %}
+									<span class="message">{{ message }}</span>
+								{% endfor %}
+							{% endif %}
+						</p>
+
 					</form>
 			</div>
 		{% endif %}

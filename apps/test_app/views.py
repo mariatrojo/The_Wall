@@ -13,30 +13,43 @@ def register(request):
 	return render(request, "test_app/register.html")
 
 def new(request):
-	return render(request, "test_app/add_new.html")
+	if 'user_id' in request.session:
+		return render(request, "test_app/add_new.html")
+	else:
+		return redirect('/signin')
 
 def edit(request, user_id):
-	user = User.objects.get(id=user_id)
-	context = { "user": user }
-	return render(request, "test_app/edit.html", context)
+	if 'user_id' in request.session:
+		user = User.objects.get(id=user_id)
+		context = { "user": user }
+		return render(request, "test_app/edit.html", context)
+	else:
+		return redirect('/signin')
 
 def dashboard(request):
-	context = {"users": User.objects.all()}
-	try:
-		id = request.session['user_id']
-		user = User.objects.get(id = id)
-		return render(request, "test_app/dashboard.html", context)
-	except:
-		return redirect('/')
+	if 'user_id' in request.session:
+		context = {"users": User.objects.all()}
+		try:
+			id = request.session['user_id']
+			user = User.objects.get(id = id)
+			return render(request, "test_app/dashboard.html", context)
+		except:
+			return redirect('/')
+	else:
+		return redirect('/signin')
 
 def admin_dashboard(request):
 	context = {"users": User.objects.all()}
-	try:
-		id = request.session['user_id']
-		user = User.objects.get(id = id)
-		return render(request, "test_app/admin_dashboard.html", context)
-	except:
-		return redirect('/')
+	if 'user_id' in request.session:
+		try:
+			id = request.session['user_id']
+			user = User.objects.get(id = id)
+			return render(request, "test_app/admin_dashboard.html", context)
+		except:
+			return redirect('/')
+	else:
+		return redirect('/signin')
+
 
 def signin_form(request):
 	result = User.objects.login_validator(request.POST)
@@ -67,18 +80,21 @@ def register_form(request):
 			return redirect('/dashboard')
 
 def profile(request, user_id):
-	user = User.objects.get(id=user_id)
-	authors = User.objects.all()
-	user_messages = Message.objects.order_by('-created_at')
-	comments = Comment.objects.all()
-	print comments
-	context = { 
-		"user": user, 
-		"authors": authors, 
-		"user_messages": user_messages, 
-		"comments": comments,
-	 }
-	return render(request, "test_app/profile.html", context)
+	if 'user_id' in request.session:
+		user = User.objects.get(id=user_id)
+		authors = User.objects.all()
+		user_messages = Message.objects.order_by('-created_at')
+		comments = Comment.objects.all()
+		print comments
+		context = { 
+			"user": user, 
+			"authors": authors, 
+			"user_messages": user_messages, 
+			"comments": comments,
+		}
+		return render(request, "test_app/profile.html", context)
+	else:
+		return redirect('/signin')
 
 def admin_register(request):
 	result = User.objects.register_validator(request.POST)

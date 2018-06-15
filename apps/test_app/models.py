@@ -139,7 +139,6 @@ class BlogManager(models.Manager):
 		user_id = postData['id']
 		userLevel = postData['user_level']
 		user = User.objects.get(id = user_id)
-		print userLevel
 		# normal = postData['normal']
 		# admin = postData['admin']
 
@@ -179,9 +178,7 @@ class BlogManager(models.Manager):
 			if userLevel == "2":
 				user.user_level = 9
 				user.save()
-			print user.user_level
 			return user
-
 
 		return errors
 

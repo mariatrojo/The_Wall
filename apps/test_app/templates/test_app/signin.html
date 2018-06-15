@@ -39,9 +39,9 @@
 				<form action="signin_form" method="POST">
 					{% csrf_token %}
 					<p>Email Address:</p>
-					<p><input type="text" name="email"><span class="message">Demo login: doug@funny.com</span></p>
+					<p><input type="text" name="email" value="doug@funny.com"></p>
 					<p>Password:</p>
-					<p><input type="password" name="password"><span class="message">Demo password: asdfasdf</span></p>
+					<p><input type="password" name="password" value="asdfasdf"></p>
 					<button type="submit" class="btn btn-outline-light">Sign in</button>
 					<a class="light-link" href="/register"><p>Don't have an account? Register</a></p>
 				</form>

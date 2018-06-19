@@ -74,10 +74,10 @@ def register_form(request):
 	else:
 		if result.user_level == 1:
 			request.session['user_id'] = result.id
-			return redirect('/dashboard/admin')
+			return redirect('/dashboard')
 		else:
 			request.session['user_id'] = result.id
-			return redirect('/dashboard')
+			return redirect('/dashboard/admin')
 
 def profile(request, user_id):
 	if 'user_id' in request.session:

@@ -46,11 +46,12 @@ class BlogManager(models.Manager):
 				errors.append("Email is already used")
 			except:
 				hash = bcrypt.hashpw(pw.encode(), bcrypt.gensalt())
-				return User.objects.create(email=email, first_name=fname, last_name=lname, password=hash, user_level=1)
-				if User.objects.get(id=1):
-					user = User.objects.get(id=1)
+				user = User.objects.create(email=email, first_name=fname, last_name=lname, password=hash, user_level=1)
+				if user.id == 1:
 					user.user_level=9
 					user.save()
+					return user
+				else:
 					return user
 		return errors
 

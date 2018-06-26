@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.core.urlresolvers import reverse
 from django.contrib import messages
-from models import * 
+from .models import * 
 
 def index(request):
 	return render(request, "test_app/index.html")
@@ -75,7 +75,7 @@ def register_form(request):
 		if result.user_level == 1:
 			request.session['user_id'] = result.id
 			return redirect('/dashboard')
-		else:
+		elif result.user_level == 9:
 			request.session['user_id'] = result.id
 			return redirect('/dashboard/admin')
 

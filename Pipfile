@@ -8,7 +8,7 @@ name = "pypi"
 [packages]
 bcrypt = "==3.1.4"
 cffi = "==1.11.2"
-django = "~=1.11.27"
+django = "~=1.11.29"
 pycparser = "==2.18"
 six = "==1.11.0"
 
